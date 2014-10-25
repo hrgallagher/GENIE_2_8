@@ -132,7 +132,12 @@ double QPMDISPXSec::XSec(
     double Q2 = utils::kinematics::XYtoQ2(E,Mnuc,x,y);
     double Q4 = Q2*Q2;
     g2 = kAem2 * kPi2 / (2.0 * fSin48w * Q4); 
+  }  else if (proc_info.IsWeakCC()) {
+    g2 = kGF2 * kMw2 * kMw2 / TMath::Power((Q2 + kMw2), 2);
+  } else if (proc_info.IsWeakNC()) {
+    g2 = kGF2 * kMz2 * kMz2 / TMath::Power((Q2 + kMz2), 2);
   }
+
   double front_factor = (g2*Mnuc*E) / kPi;
 
   // Build all dxsec/dxdy terms
