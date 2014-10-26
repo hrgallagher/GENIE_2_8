@@ -128,9 +128,9 @@ double QPMDISPXSec::XSec(
   // So, overall:
   // G_{Fermi}^2 --> a_{em}^2 * pi^2 / (2 * sin^4(theta_weinberg) * q^{4})
   //
+  double Q2 = utils::kinematics::XYtoQ2(E,Mnuc,x,y);
+  double Q4 = Q2*Q2;
   if(proc_info.IsEM()) {
-    double Q2 = utils::kinematics::XYtoQ2(E,Mnuc,x,y);
-    double Q4 = Q2*Q2;
     g2 = kAem2 * kPi2 / (2.0 * fSin48w * Q4); 
   }  else if (proc_info.IsWeakCC()) {
     g2 = kGF2 * kMw2 * kMw2 / TMath::Power((Q2 + kMw2), 2);
