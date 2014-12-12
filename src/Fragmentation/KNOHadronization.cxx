@@ -497,9 +497,17 @@ void KNOHadronization::LoadConfig(void)
   fPeta  = fConfig->GetDoubleDef(
 	     "ProbEtaEta", gc->GetDouble("KNO-ProbEtaEta")); 
   
-  fConfig->GetDoubleDef(
-	       "ProbEtaEta", gc->GetDouble("KNO-ProbEtaEta")); 
-  
+  double fsum = fPeta + fPpi0eta + fPK0 + fPKc + fPpic + fPpi0;
+  double diff = TMath::Abs(1.-fsum); 
+  if(diff>0.001) {
+     LOG("KNOHad", pWARN) << "KNO Probabilities do not sum to unity! Renormalizing..." ;
+     fPpi0 = fPpi0/fsum; 
+     fPpic = fPpic/fsum; 
+     fPKc  = fPKc/fsum; 
+     fPK0 = fPK0/fsum; 
+     fPpi0eta = fPpi0eta/fsum;
+     fPeta = fPeta/fsum; 
+  }
 
   // Decay unstable particles now or leave it for later? Which decayer to use?
   fDecayer = 0;
